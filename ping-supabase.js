@@ -27,7 +27,13 @@ async function pingSupabase() {
 
     console.log(`Successfully pinged Supabase! Status: ${response.status}`);
   } catch (error) {
-    console.error("Failed to ping Supabase:", error.message);
+    // This will print the EXACT reason the network request is failing
+    console.error("--- NETWORK ERROR DETECTED ---");
+    console.error("Message:", error.message);
+    console.error(
+      "Underlying Cause:",
+      error.cause || "No deeper cause provided.",
+    );
     process.exit(1);
   }
 }
