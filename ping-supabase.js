@@ -1,7 +1,6 @@
 // ping-supabase.js
 
-// Hardcode your actual URL and Key right here inside the quotes
-const SUPABASE_URL = "https://your-project-url.supabase.co";
+const SUPABASE_URL = "https://clmlvoxsbbyujcufumho.supabase.co";
 const SUPABASE_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsbWx2b3hzYmJ5dWpjdWZ1bWhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzODkzNDUsImV4cCI6MjA4NTk2NTM0NX0.keFRX9Ubx4lfYgQgj87jCp9e-VTAhzVrdB7DnCpV7qU";
 
@@ -11,7 +10,6 @@ async function pingSupabase() {
     process.exit(1);
   }
 
-  // Remember to change 'your_table_name' below!
   const url = `${SUPABASE_URL}/rest/v1/faq_tracker?select=*&limit=1`;
 
   try {
