@@ -1,7 +1,9 @@
 // ping-supabase.js
 
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY;
+// Hardcode your actual URL and Key right here inside the quotes
+const SUPABASE_URL = "https://your-project-url.supabase.co";
+const SUPABASE_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsbWx2b3hzYmJ5dWpjdWZ1bWhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzODkzNDUsImV4cCI6MjA4NTk2NTM0NX0.keFRX9Ubx4lfYgQgj87jCp9e-VTAhzVrdB7DnCpV7qU";
 
 async function pingSupabase() {
   if (!SUPABASE_URL || !SUPABASE_KEY) {
@@ -9,7 +11,7 @@ async function pingSupabase() {
     process.exit(1);
   }
 
-  // We limit the query to 1 row to minimize bandwidth and processing
+  // Remember to change 'your_table_name' below!
   const url = `${SUPABASE_URL}/rest/v1/your_table_name?select=*&limit=1`;
 
   try {
