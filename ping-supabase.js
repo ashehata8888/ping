@@ -12,7 +12,7 @@ async function pingSupabase() {
   }
 
   // Remember to change 'your_table_name' below!
-  const url = `${SUPABASE_URL}/rest/v1/your_table_name?select=*&limit=1`;
+  const url = `${SUPABASE_URL}/rest/v1/faq_tracker?select=*&limit=1`;
 
   try {
     const response = await fetch(url, {
