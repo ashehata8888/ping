@@ -1,8 +1,49 @@
+// // ping-supabase.js
+
+// const SUPABASE_URL = "https://clmlvoxsbbyujcufumho.supabase.co";
+// const SUPABASE_KEY =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsbWx2b3hzYmJ5dWpjdWZ1bWhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzODkzNDUsImV4cCI6MjA4NTk2NTM0NX0.keFRX9Ubx4lfYgQgj87jCp9e-VTAhzVrdB7DnCpV7qU";
+
+// async function pingSupabase() {
+//   if (!SUPABASE_URL || !SUPABASE_KEY) {
+//     console.error("Missing Supabase environment variables.");
+//     process.exit(1);
+//   }
+
+//   const url = `${SUPABASE_URL}/rest/v1/faq_tracker?select=*&limit=1`;
+
+//   try {
+//     const response = await fetch(url, {
+//       method: "GET",
+//       headers: {
+//         apikey: SUPABASE_KEY,
+//         Authorization: `Bearer ${SUPABASE_KEY}`,
+//       },
+//     });
+
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! status: ${response.status}`);
+//     }
+
+//     console.log(`Successfully pinged Supabase! Status: ${response.status}`);
+//   } catch (error) {
+//     // This will print the EXACT reason the network request is failing
+//     console.error("--- NETWORK ERROR DETECTED ---");
+//     console.error("Message:", error.message);
+//     console.error(
+//       "Underlying Cause:",
+//       error.cause || "No deeper cause provided.",
+//     );
+//     process.exit(1);
+//   }
+// }
+
+// pingSupabase();
+
 // ping-supabase.js
 
 const SUPABASE_URL = "https://clmlvoxsbbyujcufumho.supabase.co";
-const SUPABASE_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsbWx2b3hzYmJ5dWpjdWZ1bWhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzODkzNDUsImV4cCI6MjA4NTk2NTM0NX0.keFRX9Ubx4lfYgQgj87jCp9e-VTAhzVrdB7DnCpV7qU";
+const SUPABASE_KEY = "YOUR_ANON_KEY"; // Keep your anon key since RLS is off
 
 async function pingSupabase() {
   if (!SUPABASE_URL || !SUPABASE_KEY) {
@@ -10,7 +51,9 @@ async function pingSupabase() {
     process.exit(1);
   }
 
-  const url = `${SUPABASE_URL}/rest/v1/faq_tracker?select=*&limit=1`;
+  // ADDED CACHE-BUSTER: &nocache=${Date.now()}
+  // This forces the CDN to bypass the cache and hit the Postgres database directly.
+  const url = `${SUPABASE_URL}/rest/v1/faq_tracker?select=*&limit=1&nocache=${Date.now()}`;
 
   try {
     const response = await fetch(url, {
@@ -18,6 +61,9 @@ async function pingSupabase() {
       headers: {
         apikey: SUPABASE_KEY,
         Authorization: `Bearer ${SUPABASE_KEY}`,
+        // Additional headers to discourage caching
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
       },
     });
 
@@ -27,7 +73,6 @@ async function pingSupabase() {
 
     console.log(`Successfully pinged Supabase! Status: ${response.status}`);
   } catch (error) {
-    // This will print the EXACT reason the network request is failing
     console.error("--- NETWORK ERROR DETECTED ---");
     console.error("Message:", error.message);
     console.error(
